@@ -10,6 +10,7 @@ import com.example.andro.ecommerce.Fragments.LoginFragment;
 import com.example.andro.ecommerce.R;
 
 public class LoginActivity extends AppCompatActivity {
+    // LoginActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
