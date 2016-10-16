@@ -15,7 +15,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/icon_email"
+        app:srcCompat="@drawable/icon_phone"
         android:id="@+id/imgEmail"
         android:layout_marginTop="250dp"
         android:layout_alignParentStart="true" />
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="Email"/>
+            android:hint="Phone"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

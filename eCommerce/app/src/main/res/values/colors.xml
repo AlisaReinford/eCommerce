@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#9879ce</color>
+    <color name="colorPrimaryDark">#ed009688</color>
     <color name="colorAccent">#FF4081</color>
     <color name="splashBkg">#80c3de</color>
     <color name="accent">#FFFFFF</color>
@@ -14,4 +14,11 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="purple">#a020f0</color>
+    <color name="colorSub">#b0afaf</color>
+    <color name="colorTex">#585858</color>
+    <color name="colordevider">#64dad8d8</color>
+    <color name="colorblue">#4c71f5</color>
+    <color name="color">#767578</color>
+    <color name="subcategroybg">#adb72ed6</color>
 </resources>

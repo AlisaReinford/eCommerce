@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.andro.ecommerce.Activity.CategoryActivity;
 import com.example.andro.ecommerce.R;
 import com.example.andro.ecommerce.app.AppController;
+import com.example.andro.ecommerce.data.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +79,7 @@ public class LoginFragment extends Fragment {
         if (!validate()) {
             return;
         }
-        loginButton.setEnabled(false);
+
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
@@ -103,16 +104,26 @@ public class LoginFragment extends Fragment {
                             String flag = jsonArray.get(0).toString();
                             if (flag.equals("success")) {
                                 pDialog.dismiss();
-                                loginButton.setEnabled(true);
                                 Intent intent = new Intent(getActivity(), CategoryActivity.class);
-                                startActivity(intent);
+                                intent.putExtra("mobile", jsonArray.get(1).toString());
+                                User.phone = jsonArray.get(1).toString();
                                 getActivity().finish();
+                                startActivity(intent);
+
                             } else {
-                                pDialog.hide();
-                                onLoginFailed();
+                                if (flag.equals("failure")) {
+                                    Toast.makeText(getContext(), "Please check your email and password", Toast.LENGTH_LONG).show();
+                                    pDialog.dismiss();
+
+                                } else {
+                                    pDialog.dismiss();
+                                    onLoginFailed();
+                                }
 
                             }
                         } catch (JSONException e) {
+                            pDialog.dismiss();
+                            onLoginFailed();
                             e.printStackTrace();
                         }
                     }
@@ -120,9 +131,8 @@ public class LoginFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // hide the progress dialog
-                        Log.i("lihang", error.getMessage());
-                        pDialog.hide();
+                        pDialog.dismiss();
+                        onLoginFailed();
             }
         });
         // Adding request to request queue
@@ -130,17 +140,16 @@ public class LoginFragment extends Fragment {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getContext(), "Login failed, Please check your phone number and password", Toast.LENGTH_LONG).show();
-        loginButton.setEnabled(true);
+        Toast.makeText(getContext(), "Something went wrong...", Toast.LENGTH_LONG).show();
     }
 
     public boolean validate() {
         boolean valid = true;
 
-        String email = emailEditText.getText().toString();
+        String mobile = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        if (email.isEmpty()) {
+        if (mobile.isEmpty() || mobile.length() != 10) {
             emailEditText.setError("enter a valid email address");
             valid = false;
         } else {

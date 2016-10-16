@@ -1,0 +1,171 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ShoppingCartActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#51a3df"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="14dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <com.example.andro.ecommerce.customfonts.MyTextView
+                        android:id="@+id/shipping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="SHIPPING TO:"
+                        android:textColor="@color/color"
+                        android:textSize="12dp" />
+
+
+                    <com.example.andro.ecommerce.customfonts.MyTextView
+
+                        android:id="@+id/edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:background="#00000000"
+                        android:gravity="right"
+                        android:text="EDIT"
+                        android:textColor="#51a3df"
+                        android:textSize="12dp" />
+
+
+                </LinearLayout>
+
+
+                <com.example.andro.ecommerce.customfonts.MyTextView
+                    android:id="@+id/mtv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:text="Lihang Gu"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <com.example.andro.ecommerce.customfonts.MyTextView
+                    android:id="@+id/mtv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="9131 SW 178 TER"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dad8d8"
+                android:gravity="bottom" />
+
+
+            <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/cart_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="89dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/amount"
+            android:background="#dad8d8"
+            android:elevation="1dp"
+            android:gravity="bottom" />
+
+
+        <!--******TOTAL*******-->
+
+        <LinearLayout
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mtv_pay"
+            android:background="#fff"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp" >
+
+
+            <com.example.andro.ecommerce.customfonts.MyTextView
+                android:id="@+id/total1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TOTAL AMOUNT"
+                android:textColor="#333333"
+                android:textSize="12dp" />
+
+
+            <com.example.andro.ecommerce.customfonts.MyTextView
+
+                android:id="@+id/mtv_total2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="#00000000"
+                android:gravity="right"
+                android:text="$ 858.00"
+                android:textColor="#333333"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+
+        <com.example.andro.ecommerce.customfonts.MyTextView
+            android:id="@+id/mtv_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#51a3df"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="CONFIRM &amp; PAY"
+            android:textColor="#fff"
+            android:textSize="16dp" />
+
+
+    </RelativeLayout>
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+</RelativeLayout>

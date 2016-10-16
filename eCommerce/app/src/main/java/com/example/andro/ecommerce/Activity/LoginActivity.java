@@ -3,14 +3,12 @@ package com.example.andro.ecommerce.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.andro.ecommerce.Fragments.LoginFragment;
 import com.example.andro.ecommerce.R;
 
 public class LoginActivity extends AppCompatActivity {
-    // LoginActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
