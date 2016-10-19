@@ -1,13 +1,20 @@
 package com.example.andro.ecommerce.Activity;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -26,15 +33,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProductInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     public final static String TAG = ProductInfoActivity.class.getName();
 
+    RelativeLayout rl;
     MyTextView mtv_name, mtv_description, mtv_price;
     ImageView iv_back, iv_cart, iv_product_info, iv_addtocart;
     Product product;
     SharedPreferences mSharedPreference;
     ArrayList<String> cart = new ArrayList<>();
+    private PathMeasure mPathMeasure;
+    /**
+     * the coordinate of middle point
+     */
+    private float[] mCurrentPosition = new float[2];
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +65,7 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
+        rl = (RelativeLayout) findViewById(R.id.rl);
         mtv_name = (MyTextView) findViewById(R.id.mtv_name);
         mtv_description = (MyTextView) findViewById(R.id.mtv_description);
         mtv_price = (MyTextView) findViewById(R.id.mtv_price);
@@ -59,7 +76,7 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
 
         mtv_name.setText(product.getProductName());
         mtv_description.setText(product.getDescription());
-        mtv_price.setText(String.valueOf(product.getPrice()));
+        mtv_price.setText("$ " + product.getPrice());
 
         imageLoading(product.getImage(), iv_product_info);
 
@@ -98,6 +115,7 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.iv_addtocart:
+                addToCartAnimation(iv_addtocart);
                 for ( int i = 0; i < cart.size(); i++) {
                     String[] strs = cart.get(i).split(",");
                     if (strs[0].equals(product.getId())) {
@@ -108,7 +126,6 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
                         mEdit.commit();
                         Toast.makeText(this, "added to the shopping cart", Toast.LENGTH_SHORT).show();
                         loadCart();
-                        Log.i("ooxx", "1   " + cart.toString());
                         return;
                     }
                 }
@@ -118,8 +135,89 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
                 mEdit.commit();
                 Toast.makeText(this, "added to the shopping cart", Toast.LENGTH_SHORT).show();
                 loadCart();
-                Log.i("ooxx", "2    " + cart.toString());
         }
+    }
+
+    // animation when you add goods to the shopping cart
+    void addToCartAnimation(ImageView iv) {
+
+        // 1.create a new imageview to execute the animation
+        final CircleImageView goods = new CircleImageView(ProductInfoActivity.this);
+        goods.setBorderColor(getResources().getColor(R.color.splashBkg));
+        goods.setBorderWidth(1);
+        goods.setImageBitmap(bitmap);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        rl.addView(goods, params);
+
+        // 2.the preparation of calculating the start/end coordinate
+        // get the parent start coordinate
+        int[] parentLocation = new int[2];
+        rl.getLocationInWindow(parentLocation);
+
+        // get the goods icon coordinate
+        int[] startLoc = new int[2];
+        iv.getLocationInWindow(startLoc);
+
+        // get the shopping cart icon coordinate;
+        int[] endLoc = new int[2];
+        iv_cart.getLocationInWindow(endLoc);
+
+        // 3.start calculating start/end coordinate
+        // start coordinate
+        float startX = startLoc[0] - parentLocation[0] + iv.getWidth() / 2;
+        float startY = startLoc[1] - parentLocation[1] + iv.getHeight() / 2;
+
+        // end coordinate
+        float toX = endLoc[0] - parentLocation[0] + iv_cart.getWidth() / 5;
+        float toY = endLoc[1] - parentLocation[1];
+
+        // 4.calculate the interpolation coordinate of middle animation
+        // start drawing Bezier Curve
+        Path path = new Path();
+        // move to start point
+        path.moveTo(startX, startY);
+        path.quadTo((startX + toX) / 2, startY, toX, toY);
+        mPathMeasure = new PathMeasure(path, false);
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, mPathMeasure.getLength());
+        valueAnimator.setDuration(1000);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                // boolean getPosTan(float distance, float[] pos, float[] tan)
+                mPathMeasure.getPosTan(value, mCurrentPosition, null);
+                goods.setTranslationX(mCurrentPosition[0]);
+                goods.setTranslationY(mCurrentPosition[1]);
+            }
+        });
+
+        // start executing animation
+        valueAnimator.start();
+
+        // operation after animation
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                rl.removeView(goods);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     private void imageLoading(String url, final ImageView imageView) {
@@ -134,6 +232,7 @@ public class ProductInfoActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     if (response.getBitmap() != null) {
+                        bitmap = response.getBitmap();
                         imageView.setImageBitmap(response.getBitmap());
                     }
                 }

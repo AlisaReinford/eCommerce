@@ -61,6 +61,10 @@ public class CategoryActivity extends AppCompatActivity
     private float slideMenuWidth;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    int currentPosition = 0;
+    int previousPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,14 +189,14 @@ public class CategoryActivity extends AppCompatActivity
     }
 
     private void setTab() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         for (int i = 0; i < categories.size(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(categories.get(i).getCatagoryName()));
         }
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new CategoryPagerAdapter(
                 getSupportFragmentManager(), categories);
         viewPager.setAdapter(pagerAdapter);
@@ -200,6 +204,8 @@ public class CategoryActivity extends AppCompatActivity
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                previousPosition = currentPosition;
+                currentPosition = tab.getPosition();
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -221,7 +227,37 @@ public class CategoryActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (currentPosition == 0) {
+                //super.onBackPressed();
+                final NiftyDialogBuilder dialogBuilder1 = NiftyDialogBuilder.getInstance(this);
+                dialogBuilder1
+                        .withTitle("Exit")
+                        .withTitleColor("#FFFFFF")
+                        .withDividerColor("#11000000")
+                        .withMessage("Do you want to exit?")
+                        .withMessageColor("#FFFFFFFF")
+                        .withDialogColor(R.color.colorblue)
+                        .withIcon(R.drawable.app_icon)
+                        .withButton1Text("OK")
+                        .withButton2Text("Cancel")
+                        .setButton1Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder1.dismiss();
+                                finish();
+                            }
+                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder1.dismiss();
+                            }
+                        })
+                        .show();
+            } else {
+                viewPager.setCurrentItem(previousPosition);
+            }
+
         }
     }
 
@@ -300,7 +336,7 @@ public class CategoryActivity extends AppCompatActivity
                         .withDividerColor("#11000000")
                         .withMessage("Mobile: " + User.phone)
                         .withMessageColor("#FFFFFFFF")
-                        .withDialogColor(R.color.colorblue)
+                        .withDialogColor("#11000000")
                         .withIcon(R.drawable.app_icon)
                         .withButton1Text("OK")
                         .setButton1Click(new View.OnClickListener() {

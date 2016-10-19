@@ -9,11 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-/**
- * 图像处理类
- * 1.高斯模糊一张图片
- * 2.获取一个视频的缩略图
- */
+
 public class ImageUtils {
 
 
