@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andro.ecommerce.Adapter.ShoppingCartAdapter;
@@ -21,6 +23,7 @@ import com.example.andro.ecommerce.customfonts.MyTextView;
 import com.example.andro.ecommerce.data.ChangeCartListener;
 import com.example.andro.ecommerce.data.User;
 import com.example.andro.ecommerce.utils.DividerItemDecoration;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -34,7 +37,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ShoppingCartActivity extends AppCompatActivity implements ChangeCartListener{
+public class ShoppingCartActivity extends AppCompatActivity implements ChangeCartListener {
 
     String url = "http://rjtmobile.com/ansari/oms/orders.php?order_status=1&store_id=801&";
 
@@ -48,9 +51,14 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
 
     SharedPreferences mSharedPreference;
     ArrayList<String> cart = new ArrayList<>();
-    MyTextView mtv_edit, mtv_name, mtv_address, mtv_total2, mtv_pay, mtv_paypal;
+    MyTextView mtv_edit_address, mtv_name, mtv_address, mtv_total2, mtv_pay, mtv_paypal;
     RecyclerView recyclerView;
     ShoppingCartAdapter shoppingCartAdapter;
+    EditText et_name;
+    EditText et_address;
+    String name;
+    String address;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +98,57 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
     }
 
     void initView() {
-        mtv_edit = (MyTextView) findViewById(R.id.edit);
+        mtv_edit_address = (MyTextView) findViewById(R.id.edit_address);
         mtv_name = (MyTextView) findViewById((R.id.mtv_name));
         mtv_address = (MyTextView) findViewById(R.id.mtv_address);
         mtv_total2 = (MyTextView) findViewById(R.id.mtv_total2);
         mtv_pay = (MyTextView) findViewById(R.id.mtv_pay);
         mtv_paypal = (MyTextView) findViewById(R.id.mtv_paypal);
 
+        mtv_edit_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final NiftyDialogBuilder dialogBuilder1 = NiftyDialogBuilder.getInstance(ShoppingCartActivity.this);
+                dialogBuilder1
+                        .withTitle("Edit Address")
+                        .withTitleColor("#FFFFFF")
+                        .withDividerColor("#11000000")
+                        .withMessage(null)
+                        .withMessageColor("#FFFFFFFF")
+                        .withIcon(R.drawable.app_icon)
+                        .setCustomView(R.layout.edit_address, ShoppingCartActivity.this)
+                        .withButton1Text("OK")
+                        .withButton2Text("Cancel");
+                et_name = (EditText) dialogBuilder1.findViewById(R.id.edit_name);
+                et_address = (EditText) dialogBuilder1.findViewById(R.id.edit_address);
+                dialogBuilder1.setButton1Click(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogBuilder1.dismiss();
+                        name = et_name.getText().toString();
+                        address = et_address.getText().toString();
+                        mtv_name.setText(name);
+                        mtv_address.setText(address);
+                        dialogBuilder1.dismiss();
+                    }
+                });
+                dialogBuilder1.setButton2Click(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogBuilder1.dismiss();
+                    }
+                });
+
+                dialogBuilder1.show();
+            }
+        });
+
+
+
         mtv_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( cart.size() == 0) {
+                if (cart.size() == 0) {
                     Toast.makeText(ShoppingCartActivity.this, "Your shopping cart is empty.", Toast.LENGTH_SHORT).show();
                 } else {
                     // TODO
@@ -145,6 +193,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
 
         mtv_total2.setText("$ " + calculateTotal());
 
+
     }
 
     String calculateTotal() {
@@ -185,7 +234,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
     void deleteCart() {
 
         SharedPreferences.Editor mEdit = mSharedPreference.edit();
-        Map<String, String> map = (Map<String, String>)mSharedPreference.getAll();
+        Map<String, String> map = (Map<String, String>) mSharedPreference.getAll();
         if (map.size() == 0) {
             Toast.makeText(getApplicationContext(), "Your shopping cart is empty.", Toast.LENGTH_SHORT).show();
         } else {
@@ -198,7 +247,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
             if (confirm != null) {
@@ -216,12 +265,10 @@ public class ShoppingCartActivity extends AppCompatActivity implements ChangeCar
                     Toast.makeText(this, "an extremely unlikely failure occurred", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        else if (resultCode == Activity.RESULT_CANCELED) {
+        } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.i("paymentExample", "The user canceled.");
             Toast.makeText(this, "The user canceled.", Toast.LENGTH_SHORT).show();
-        }
-        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+        } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
             Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             Toast.makeText(this, "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.", Toast.LENGTH_SHORT).show();
         }
