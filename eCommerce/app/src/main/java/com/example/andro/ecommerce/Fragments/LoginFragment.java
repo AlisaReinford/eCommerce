@@ -81,6 +81,7 @@ public class LoginFragment extends Fragment {
         }
         Log.i("mmmmmm", "here");
 
+        Log.i("masterbranch", "this is from master branch!");
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
