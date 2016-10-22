@@ -79,6 +79,10 @@ public class LoginFragment extends Fragment {
 
         Log.i("masterbranch", "something changed from master branch!");
         
+        Log.i("masterbranch", "this is from master branch!");
+
+        Log.i("localbranch", "this is from dada branch");
+
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
         pDialog = new ProgressDialog(getContext(), R.style.AppTheme_Dark_Dialog);
