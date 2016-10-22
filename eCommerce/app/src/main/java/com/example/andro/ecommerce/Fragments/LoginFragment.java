@@ -79,7 +79,7 @@ public class LoginFragment extends Fragment {
 
         Log.i("masterbranch", "this is from master branch!");
 
-        Log.i("localbranch", "this is from dada branch");
+        Log.i("localbranch", "this is from dada branch and change something");
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
