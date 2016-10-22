@@ -54,7 +54,7 @@
 
                     <com.example.andro.ecommerce.customfonts.MyTextView
 
-                        android:id="@+id/edit"
+                        android:id="@+id/edit_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.6"

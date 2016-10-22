@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +15,13 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
+import com.example.andro.ecommerce.Activity.ShoppingCartActivity;
 import com.example.andro.ecommerce.R;
 import com.example.andro.ecommerce.app.AppController;
 import com.example.andro.ecommerce.customfonts.MyTextView;
 import com.example.andro.ecommerce.data.ChangeCartListener;
 import com.example.andro.ecommerce.data.User;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -39,6 +42,9 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     SharedPreferences mSharedPreference;
     Context context;
     ChangeCartListener listener;
+    MyTextView mtv_edit_quantity;
+    EditText et_quantity;
+    int quantity = 0;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -54,6 +60,62 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             tv_cart_name= (TextView) itemView.findViewById(R.id.tv_cart_name);
             tv_cart_price = (TextView) itemView.findViewById(R.id.tv_cart_price);
             tv_cart_quantity = (TextView) itemView.findViewById(R.id.tv_cart_quantity);
+            mtv_edit_quantity = (MyTextView) itemView.findViewById(R.id.edit_quantity);
+
+            mtv_edit_quantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final NiftyDialogBuilder dialogBuilder2 = NiftyDialogBuilder.getInstance(context);
+                    dialogBuilder2
+                            .withTitle("Edit Quantity")
+                            .withTitleColor("#FFFFFF")
+                            .withDividerColor("#11000000")
+                            .withMessage(null)
+                            .withMessageColor("#FFFFFFFF")
+                            .withIcon(R.drawable.app_icon)
+                            .setCustomView(R.layout.edit_quantity, context)
+                            .withButton1Text("OK")
+                            .withButton2Text("Cancel");
+                    et_quantity = (EditText) dialogBuilder2.findViewById(R.id.edit_quantity);
+                    dialogBuilder2.setButton1Click(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String[] strs = cart.get(getAdapterPosition()).split(",");
+                            if (et_quantity.getText().toString().equals("")) {
+                                dialogBuilder2.dismiss();
+                                return;
+                            }
+                            quantity = Integer.parseInt(et_quantity.getText().toString());
+                            if (quantity == 0) {
+                                SharedPreferences.Editor mEdit = mSharedPreference.edit();
+                                mEdit.remove("cart_" + strs[0]);
+                                mEdit.commit();
+                                loadCart();
+                                notifyDataSetChanged();
+                                listener.onMin();
+                            } else {
+                                strs[2] = quantity + "";
+                                SharedPreferences.Editor mEdit = mSharedPreference.edit();
+                                mEdit.remove("cart_" + strs[0]);
+                                mEdit.putString("cart_" + strs[0], strs[0] + "," + strs[1] + "," + strs[2] + "," + strs[3] + "," + strs[4]);
+                                mEdit.commit();
+                                loadCart();
+                                notifyDataSetChanged();
+                                listener.onPlus();
+                            }
+                            dialogBuilder2.dismiss();
+                        }
+                    });
+                    dialogBuilder2.setButton2Click(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogBuilder2.dismiss();
+                        }
+                    });
+
+                    dialogBuilder2.show();
+                }
+            });
             itemView.findViewById(R.id.iv_plus).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

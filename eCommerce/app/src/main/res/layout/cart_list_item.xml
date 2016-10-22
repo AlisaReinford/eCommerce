@@ -51,6 +51,17 @@
 
 
         </LinearLayout>
+
+        <com.example.andro.ecommerce.customfonts.MyTextView
+
+            android:id="@+id/edit_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="EDIT"
+            android:textColor="#51a3df"
+            android:textSize="12dp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -64,14 +75,12 @@
             android:id="@+id/iv_plus"
             android:layout_width="21dp"
             android:layout_height="21dp"
-            android:src="@drawable/plus"
-
-            />
+            android:src="@drawable/plus" />
 
             <TextView
                 android:id="@+id/tv_cart_quantity"
 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
 
