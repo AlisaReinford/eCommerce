@@ -75,7 +75,6 @@ public class LoginFragment extends Fragment {
         if (!validate()) {
             return;
         }
-        Log.i("mmmmmm", "here");
 
         Log.i("masterbranch", "something changed from master branch!");
         
@@ -110,8 +109,7 @@ public class LoginFragment extends Fragment {
                                 intent.putExtra("mobile", jsonArray.get(1).toString());
                                 User.phone = jsonArray.get(1).toString();
                                 getActivity().finish();
-                                getActivity().startActivity(intent);
-                                getActivity().overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
+                                startActivity(intent);
 
                             } else {
                                 if (flag.equals("failure")) {
@@ -153,7 +151,11 @@ public class LoginFragment extends Fragment {
         String password = passwordEditText.getText().toString();
 
         if (mobile.isEmpty() || mobile.length() != 10) {
+
             emailEditText.setError("enter a valid phone number.");
+
+            emailEditText.setError("enter a valid email address");
+
             valid = false;
         } else {
             emailEditText.setError(null);
