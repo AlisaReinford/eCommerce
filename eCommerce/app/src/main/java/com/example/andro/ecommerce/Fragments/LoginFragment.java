@@ -39,15 +39,11 @@ public class LoginFragment extends Fragment {
     Button loginButton;
     ProgressDialog pDialog;
 
-
-
     public LoginFragment() {
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         emailEditText = (EditText) rootView.findViewById(R.id.etEmail);
         passwordEditText = (EditText) rootView.findViewById(R.id.etPassword);
@@ -82,6 +78,8 @@ public class LoginFragment extends Fragment {
         Log.i("mmmmmm", "here");
 
         Log.i("masterbranch", "this is from master branch!");
+
+        Log.i("localbranch", "this is from dada branch");
 
         // Tag used to cancel the request
         String tag_json_obj = "json_obj_req";
@@ -136,8 +134,8 @@ public class LoginFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         pDialog.dismiss();
                         onLoginFailed();
-            }
-        });
+                    }
+                });
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
@@ -153,7 +151,7 @@ public class LoginFragment extends Fragment {
         String password = passwordEditText.getText().toString();
 
         if (mobile.isEmpty() || mobile.length() != 10) {
-            emailEditText.setError("enter a valid phone number");
+            emailEditText.setError("enter a valid phone number.");
             valid = false;
         } else {
             emailEditText.setError(null);
@@ -168,6 +166,5 @@ public class LoginFragment extends Fragment {
 
         return valid;
     }
-
 
 }
