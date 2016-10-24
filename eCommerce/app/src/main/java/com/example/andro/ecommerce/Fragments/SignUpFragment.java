@@ -20,8 +20,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.andro.ecommerce.Activity.CategoryActivity;
 import com.example.andro.ecommerce.R;
 import com.example.andro.ecommerce.app.AppController;
-import com.example.andro.ecommerce.data.User;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by andro on 2016/10/11.
@@ -103,7 +105,6 @@ public class SignUpFragment extends Fragment {
                                 pDialog.dismiss();
                                 Intent intent = new Intent(getActivity(), CategoryActivity.class);
                                 intent.putExtra("mobile", phoneEditText.getText().toString());
-                                User.phone = phoneEditText.getText().toString();
                                 startActivity(intent);
                                 getActivity().finish();
                             } else {

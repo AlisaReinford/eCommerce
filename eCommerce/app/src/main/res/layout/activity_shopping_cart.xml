@@ -100,9 +100,7 @@
                 android:id="@+id/cart_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="137dp"
-
-                 />
+                android:layout_marginBottom="89dp" />
         </LinearLayout>
 
         <View
@@ -154,38 +152,16 @@
 
 
         <com.example.andro.ecommerce.customfonts.MyTextView
-            android:id="@+id/mtv_paypal"
+            android:id="@+id/mtv_pay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="#51a3df"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Pay with paypal"
-            android:textColor="#fff"
-            android:textSize="16dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/mtv_paypal"
-            android:background="#dad8d8"
-            android:elevation="1dp"
-            android:gravity="bottom" />
-
-        <com.example.andro.ecommerce.customfonts.MyTextView
-            android:id="@+id/mtv_pay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/mtv_paypal"
-            android:background="#51a3df"
-            android:gravity="center"
-            android:padding="16dp"
             android:text="CONFIRM &amp; PAY"
             android:textColor="#fff"
             android:textSize="16dp" />
-
-
 
 
     </RelativeLayout>
