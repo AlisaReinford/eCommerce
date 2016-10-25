@@ -5,10 +5,10 @@ package com.example.andro.ecommerce.data;
  */
 
 public class Category {
-    String Id;
-    String CatagoryName;
-    String CatagoryDiscription;
-    String CatagoryImage;
+    private  String Id;
+    private String CatagoryName;
+    private String CatagoryDiscription;
+    private String CatagoryImage;
 
     public String getId() {
         return Id;
