@@ -8,12 +8,12 @@ import android.os.Parcelable;
  */
 
 public class Product implements Parcelable{
-    String Id;
-    String ProductName;
-    int Quantity;
-    float Price;
-    String Description;
-    String Image;
+    private String Id;
+    private String ProductName;
+    private int Quantity;
+    private float Price;
+    private String Description;
+    private String Image;
 
     public String getId() {
         return Id;
