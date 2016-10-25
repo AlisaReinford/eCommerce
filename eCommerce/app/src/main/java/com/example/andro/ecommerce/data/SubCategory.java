@@ -36,7 +36,7 @@ public class SubCategory implements Parcelable{
     public void setSubCategoryDiscription(String subCategoryDiscription) {
         SubCategoryDiscription = subCategoryDiscription;
     }
-    
+
     public String getCategoryImage() {
         return CategoryImage;
     }
