@@ -5,7 +5,7 @@ package com.example.andro.ecommerce.data;
  */
 
 public class Category {
-    private  String Id;
+    private String Id;
     private String CatagoryName;
     private String CatagoryDiscription;
     private String CatagoryImage;
