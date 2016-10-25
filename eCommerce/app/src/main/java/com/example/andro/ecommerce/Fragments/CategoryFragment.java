@@ -105,9 +105,9 @@ public class CategoryFragment extends Fragment implements SubCategoryClickListen
                                 SubCategory subCategory = new SubCategory();
 
                                 subCategory.setId(object.getString("Id"));
-                                subCategory.setSubCatagoryName(object.getString("SubCatagoryName"));
-                                subCategory.setSubCatagoryDiscription(object.getString("SubCatagoryDiscription"));
-                                subCategory.setCatagoryImage(object.getString("CatagoryImage").trim());
+                                subCategory.setSubCategoryName(object.getString("SubCatagoryName"));
+                                subCategory.setSubCategoryDiscription(object.getString("SubCatagoryDiscription"));
+                                subCategory.setCategoryImage(object.getString("CatagoryImage").trim());
 
                                 subCategories.add(subCategory);
                             }

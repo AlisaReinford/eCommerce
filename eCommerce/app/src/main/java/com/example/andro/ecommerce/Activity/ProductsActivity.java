@@ -63,9 +63,9 @@ public class ProductsActivity extends AppCompatActivity implements ProductClickL
 
         subCategory = getIntent().getParcelableExtra("subCategory");
         Id = subCategory.getId();
-        String subCategoryName = subCategory.getSubCatagoryName();
-        // String subCategroyDescription = subCategory.getSubCatagoryDiscription();
-        // String subCategroyImage = subCategory.getCatagoryImage();
+        String subCategoryName = subCategory.getSubCategoryName();
+        // String subCategroyDescription = subCategory.getSubCategoryDescription();
+        // String subCategroyImage = subCategory.getCategoryImage();
         // mToolbar.setNavigationIcon();
         mToolbar.setTitle(subCategoryName);
         mToolbar.inflateMenu(R.menu.products);

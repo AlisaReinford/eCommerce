@@ -9,9 +9,9 @@ import android.os.Parcelable;
 
 public class SubCategory implements Parcelable{
     String Id;
-    String SubCatagoryName;
-    String SubCatagoryDiscription;
-    String CatagoryImage;
+    String SubCategoryName;
+    String SubCategoryDiscription;
+    String CategoryImage;
 
     public String getId() {
         return Id;
@@ -21,28 +21,28 @@ public class SubCategory implements Parcelable{
         Id = id;
     }
 
-    public String getSubCatagoryName() {
-        return SubCatagoryName;
+    public String getSubCategoryName() {
+        return SubCategoryName;
     }
 
-    public void setSubCatagoryName(String subCatagoryName) {
-        SubCatagoryName = subCatagoryName;
+    public void setSubCategoryName(String subCategoryName) {
+        SubCategoryName = subCategoryName;
     }
 
-    public String getSubCatagoryDiscription() {
-        return SubCatagoryDiscription;
+    public String getSubCategoryDescription() {
+        return SubCategoryDiscription;
     }
 
-    public void setSubCatagoryDiscription(String subCatagoryDiscription) {
-        SubCatagoryDiscription = subCatagoryDiscription;
+    public void setSubCategoryDiscription(String subCategoryDiscription) {
+        SubCategoryDiscription = subCategoryDiscription;
+    }
+    
+    public String getCategoryImage() {
+        return CategoryImage;
     }
 
-    public String getCatagoryImage() {
-        return CatagoryImage;
-    }
-
-    public void setCatagoryImage(String catagoryImage) {
-        CatagoryImage = catagoryImage;
+    public void setCategoryImage(String categoryImage) {
+        CategoryImage = categoryImage;
     }
 
     @Override
@@ -53,9 +53,9 @@ public class SubCategory implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Id);
-        dest.writeString(SubCatagoryName);
-        dest.writeString(SubCatagoryDiscription);
-        dest.writeString(CatagoryImage);
+        dest.writeString(SubCategoryName);
+        dest.writeString(SubCategoryDiscription);
+        dest.writeString(CategoryImage);
     }
 
     public static final Creator<SubCategory> CREATOR = new Creator<SubCategory>() {
@@ -63,9 +63,9 @@ public class SubCategory implements Parcelable{
         public SubCategory createFromParcel(Parcel source) {
             SubCategory subCategory = new SubCategory();
             subCategory.setId(source.readString());
-            subCategory.setSubCatagoryName(source.readString());
-            subCategory.setSubCatagoryDiscription(source.readString());
-            subCategory.setCatagoryImage(source.readString());
+            subCategory.setSubCategoryName(source.readString());
+            subCategory.setSubCategoryDiscription(source.readString());
+            subCategory.setCategoryImage(source.readString());
             return subCategory;
         }
 
