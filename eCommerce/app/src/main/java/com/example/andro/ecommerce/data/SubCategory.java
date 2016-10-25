@@ -8,10 +8,10 @@ import android.os.Parcelable;
  */
 
 public class SubCategory implements Parcelable{
-    String Id;
-    String SubCategoryName;
-    String SubCategoryDiscription;
-    String CategoryImage;
+    private String Id;
+    private String SubCategoryName;
+    private String SubCategoryDiscription;
+    private String CategoryImage;
 
     public String getId() {
         return Id;
